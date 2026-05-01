@@ -1,22 +1,49 @@
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { createPortal } from 'react-dom';
 import { useAuth } from '../context/AuthContext';
 import styles from './UserMenu.module.css';
 
 export default function UserMenu() {
   const { user, logout } = useAuth();
   const [open, setOpen] = useState(false);
-  const menuRef = useRef(null);
+  const [menuPosition, setMenuPosition] = useState({ top: 72, right: 8 });
+  const wrapRef = useRef(null);
+  const triggerRef = useRef(null);
+  const dropdownRef = useRef(null);
+
+  const updateMenuPosition = useCallback(() => {
+    if (!triggerRef.current) return;
+    const rect = triggerRef.current.getBoundingClientRect();
+    const viewportRight = Math.max(8, window.innerWidth - rect.right);
+    setMenuPosition({
+      top: rect.bottom + 8,
+      right: viewportRight,
+    });
+  }, []);
 
   useEffect(() => {
-    const handle = (e) => {
-      if (menuRef.current && !menuRef.current.contains(e.target)) {
-        setOpen(false);
-      }
+    if (!open) return;
+    updateMenuPosition();
+
+    const handlePointerDown = (e) => {
+      const inTrigger = wrapRef.current?.contains(e.target);
+      const inDropdown = dropdownRef.current?.contains(e.target);
+      if (!inTrigger && !inDropdown) setOpen(false);
     };
-    document.addEventListener('mousedown', handle);
-    return () => document.removeEventListener('mousedown', handle);
-  }, []);
+
+    const handleLayout = () => updateMenuPosition();
+
+    document.addEventListener('mousedown', handlePointerDown);
+    window.addEventListener('resize', handleLayout);
+    window.addEventListener('scroll', handleLayout, true);
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown);
+      window.removeEventListener('resize', handleLayout);
+      window.removeEventListener('scroll', handleLayout, true);
+    };
+  }, [open, updateMenuPosition]);
 
   useEffect(() => {
     const handle = (e) => { if (e.key === 'Escape') setOpen(false); };
@@ -39,9 +66,77 @@ export default function UserMenu() {
     logout();
   };
 
-  return (
-    <div className={styles.wrap} ref={menuRef}>
+  const dropdownContent = open ? (
+    <>
       <button
+        className={styles.backdrop}
+        aria-label="Close user menu"
+        onClick={() => setOpen(false)}
+      />
+
+      <div
+        ref={dropdownRef}
+        className={styles.dropdown}
+        role="menu"
+        aria-label="User menu"
+        style={{ top: `${menuPosition.top}px`, right: `${menuPosition.right}px` }}
+      >
+        <div className={styles.profileRow}>
+          {user.avatar_url ? (
+            <img
+              className={styles.avatarLg}
+              src={user.avatar_url}
+              alt={displayName}
+              width={44}
+              height={44}
+            />
+          ) : (
+            <span className={`${styles.initials} ${styles.initialsLg}`}>{initials}</span>
+          )}
+          <div>
+            <p className={styles.profileName}>{displayName}</p>
+            <p className={styles.profileLogin}>@{user.login || 'trainer'}</p>
+          </div>
+        </div>
+
+        {user.mock && (
+          <div className={styles.mockBadgeRow}>
+            <span className={styles.mockBadge}>DEMO ACCOUNT</span>
+          </div>
+        )}
+
+        <hr className={styles.divider} />
+
+        {user.html_url && !user.mock && (
+          <a
+            className={styles.menuItem}
+            href={user.html_url}
+            target="_blank"
+            rel="noreferrer"
+            role="menuitem"
+            onClick={() => setOpen(false)}
+          >
+            <GitHubIcon />
+            View GitHub profile
+          </a>
+        )}
+
+        <button
+          className={`${styles.menuItem} ${styles.logoutItem}`}
+          role="menuitem"
+          onClick={handleLogout}
+        >
+          <LogoutIcon />
+          Sign out
+        </button>
+      </div>
+    </>
+  ) : null;
+
+  return (
+    <div className={styles.wrap} ref={wrapRef}>
+      <button
+        ref={triggerRef}
         className={styles.trigger}
         onClick={() => setOpen(v => !v)}
         aria-expanded={open}
@@ -70,71 +165,7 @@ export default function UserMenu() {
         </svg>
       </button>
 
-      {open && (
-        <button
-          className={styles.backdrop}
-          aria-label="Close user menu"
-          onClick={() => setOpen(false)}
-        />
-      )}
-
-      {open && (
-        <div
-          className={styles.dropdown}
-          role="menu"
-          aria-label="User menu"
-        >
-          {/* Profile header */}
-          <div className={styles.profileRow}>
-            {user.avatar_url ? (
-              <img
-                className={styles.avatarLg}
-                src={user.avatar_url}
-                alt={displayName}
-                width={44}
-                height={44}
-              />
-            ) : (
-              <span className={`${styles.initials} ${styles.initialsLg}`}>{initials}</span>
-            )}
-            <div>
-              <p className={styles.profileName}>{displayName}</p>
-              <p className={styles.profileLogin}>@{user.login || 'trainer'}</p>
-            </div>
-          </div>
-
-          {user.mock && (
-            <div className={styles.mockBadgeRow}>
-              <span className={styles.mockBadge}>DEMO ACCOUNT</span>
-            </div>
-          )}
-
-          <hr className={styles.divider} />
-
-          {user.html_url && !user.mock && (
-            <a
-              className={styles.menuItem}
-              href={user.html_url}
-              target="_blank"
-              rel="noreferrer"
-              role="menuitem"
-              onClick={() => setOpen(false)}
-            >
-              <GitHubIcon />
-              View GitHub profile
-            </a>
-          )}
-
-          <button
-            className={`${styles.menuItem} ${styles.logoutItem}`}
-            role="menuitem"
-            onClick={handleLogout}
-          >
-            <LogoutIcon />
-            Sign out
-          </button>
-        </div>
-      )}
+      {createPortal(dropdownContent, document.body)}
     </div>
   );
 }

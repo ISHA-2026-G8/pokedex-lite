@@ -1,6 +1,10 @@
 .wrap {
-    position: relative;
-  }
+  position: relative;
+}
+
+.backdrop {
+  display: none;
+}
   
   /* ── Trigger button ── */
   .trigger {
@@ -69,22 +73,19 @@
   }
   
   /* ── Dropdown ── */
-  .dropdown {
-    position: absolute;
-    top: calc(100% + 8px);
-    right: 0;
+.dropdown {
+    position: fixed;
     min-width: 230px;
-    /* FIX: fully opaque solid background — no transparency so page content
-       behind the dropdown never bleeds through */
-    background: #1e1e3a;
+    background: rgba(30, 30, 58, 0.96);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.05);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255,255,255,0.05);
     overflow: hidden;
     animation: popIn 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
     /* High z-index so it always renders above the blurred header */
-    z-index: 9999;
-    /* Prevent any inherited backdrop-filter from parent bleeding in */
+    z-index: 1100;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     isolation: isolate;
   }
   
@@ -94,12 +95,12 @@
   }
   
   /* ── Profile row ── */
-  .profileRow {
+.profileRow {
     display: flex;
     align-items: center;
     gap: 12px;
     padding: 16px;
-    background: #1e1e3a;
+    background: rgba(30, 30, 58, 0.94);
   }
   
   .avatarLg {
@@ -133,9 +134,9 @@
   }
   
   /* ── Mock badge ── */
-  .mockBadgeRow {
+.mockBadgeRow {
     padding: 0 16px 12px;
-    background: #1e1e3a;
+    background: rgba(30, 30, 58, 0.94);
   }
   
   .mockBadge {
@@ -158,13 +159,13 @@
   }
   
   /* ── Menu items ── */
-  .menuItem {
+.menuItem {
     width: 100%;
     display: flex;
     align-items: center;
     gap: 10px;
     padding: 11px 16px;
-    background: #1e1e3a;
+    background: rgba(30, 30, 58, 0.92);
     border: none;
     color: var(--text-secondary);
     font-family: var(--font-body);
@@ -177,10 +178,32 @@
   }
   
   .menuItem:hover {
-    background: #26264a;
+    background: rgba(44, 44, 78, 0.78);
     color: var(--text-primary);
   }
   
-  .logoutItem:hover {
-    color: var(--accent-red);
+.logoutItem:hover {
+  color: var(--accent-red);
+}
+
+@media (max-width: 768px) {
+  .backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 0;
+    background: rgba(8, 10, 22, 0.56);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    z-index: 1050;
+    cursor: default;
   }
+
+  .dropdown {
+    min-width: 200px;
+    max-width: calc(100vw - 16px);
+  }
+}
