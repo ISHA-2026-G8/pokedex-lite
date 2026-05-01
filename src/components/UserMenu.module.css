@@ -1,6 +1,10 @@
 .wrap {
-    position: relative;
-  }
+  position: relative;
+}
+
+.backdrop {
+  display: none;
+}
   
   /* ── Trigger button ── */
   .trigger {
@@ -181,6 +185,21 @@
 }
 
 @media (max-width: 768px) {
+  .backdrop {
+    display: block;
+    position: fixed;
+    top: 64px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 0;
+    background: rgba(8, 10, 22, 0.52);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    z-index: 180;
+    cursor: default;
+  }
+
   .trigger {
     padding: 4px 8px 4px 4px;
     gap: 6px;
@@ -194,6 +213,7 @@
     min-width: 200px;
     max-width: calc(100vw - 16px);
     right: 0;
+    z-index: 200;
   }
 }
   

@@ -71,6 +71,14 @@ export default function UserMenu() {
       </button>
 
       {open && (
+        <button
+          className={styles.backdrop}
+          aria-label="Close user menu"
+          onClick={() => setOpen(false)}
+        />
+      )}
+
+      {open && (
         <div
           className={styles.dropdown}
           role="menu"
