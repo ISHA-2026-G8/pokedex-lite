@@ -16,8 +16,8 @@ const SESSION_KEY      = 'pokedex-auth-session';
 // ─── Mock user (dev mode — no Client ID configured) ──────────────────────────
 const MOCK_USER = {
   id: 0,
-  login: 'trainer_ash',
-  name: 'Ash Ketchum',
+  login: 'User',
+  name: 'Isha Yadav',
   avatar_url: 'https://api.dicebear.com/8.x/pixel-art/svg?seed=pikachu&backgroundColor=4ecdc4',
   html_url: 'https://github.com',
   mock: true,
