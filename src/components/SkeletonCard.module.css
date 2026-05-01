@@ -1,0 +1,39 @@
+.card {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-card);
+}
+
+.id {
+  width: 40px;
+  height: 14px;
+  align-self: flex-start;
+}
+
+.image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.name {
+  width: 80%;
+  height: 16px;
+}
+
+.types {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+.type {
+  width: 60px;
+  height: 22px;
+  border-radius: 100px;
+}

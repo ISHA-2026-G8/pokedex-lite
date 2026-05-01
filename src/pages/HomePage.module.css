@@ -1,0 +1,124 @@
+.main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  padding: 64px 0 48px;
+  overflow: hidden;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+}
+
+.heroTitle {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 7vw, 80px);
+  letter-spacing: 3px;
+  line-height: 1;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.heroTitle span {
+  color: var(--accent-red);
+}
+
+.heroSub {
+  font-size: 16px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  max-width: 500px;
+}
+
+.heroBalls {
+  position: absolute;
+  right: -40px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 20px;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.ball {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: hsl(var(--hue, 0deg) 80% 60%);
+  animation: float 4s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  filter: blur(2px);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-20px); }
+}
+
+/* CONTROLS */
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.filterWrap {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+/* RESULTS INFO */
+.resultsInfo {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ERROR */
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 40px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
+.retryBtn {
+  padding: 10px 24px;
+  background: var(--accent-red);
+  border: none;
+  border-radius: 100px;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.retryBtn:hover { opacity: 0.85; }
+
+/* PAGINATION */
+.paginationWrap {
+  margin-top: 48px;
+}
+
+@media (max-width: 768px) {
+  .main { padding: 0 16px 60px; }
+  .hero { padding: 40px 0 32px; }
+  .heroBalls { display: none; }
+}

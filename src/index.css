@@ -1,0 +1,134 @@
+/* ============================
+   POKÉDEX LITE — GLOBAL STYLES
+   ============================ */
+
+:root {
+  --bg-primary: #0d0d1a;
+  --bg-secondary: #13132a;
+  --bg-card: #1a1a35;
+  --bg-card-hover: #21213f;
+  --accent-red: #ff3b3b;
+  --accent-yellow: #ffd93d;
+  --accent-blue: #4ecdc4;
+  --accent-purple: #a855f7;
+  --text-primary: #f0f0ff;
+  --text-secondary: #9090b8;
+  --text-muted: #5a5a8a;
+  --border-color: #2a2a50;
+  --border-hover: #4a4a80;
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.4);
+  --shadow-hover: 0 8px 40px rgba(0,0,0,0.6);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* TYPE COLORS */
+.type-normal    { --type-bg: #a8a878; --type-text: #fff; }
+.type-fire      { --type-bg: #f08030; --type-text: #fff; }
+.type-water     { --type-bg: #6890f0; --type-text: #fff; }
+.type-electric  { --type-bg: #f8d030; --type-text: #333; }
+.type-grass     { --type-bg: #78c850; --type-text: #fff; }
+.type-ice       { --type-bg: #98d8d8; --type-text: #333; }
+.type-fighting  { --type-bg: #c03028; --type-text: #fff; }
+.type-poison    { --type-bg: #a040a0; --type-text: #fff; }
+.type-ground    { --type-bg: #e0c068; --type-text: #333; }
+.type-flying    { --type-bg: #a890f0; --type-text: #fff; }
+.type-psychic   { --type-bg: #f85888; --type-text: #fff; }
+.type-bug       { --type-bg: #a8b820; --type-text: #fff; }
+.type-rock      { --type-bg: #b8a038; --type-text: #fff; }
+.type-ghost     { --type-bg: #705898; --type-text: #fff; }
+.type-dragon    { --type-bg: #7038f8; --type-text: #fff; }
+.type-dark      { --type-bg: #705848; --type-text: #fff; }
+.type-steel     { --type-bg: #b8b8d0; --type-text: #333; }
+.type-fairy     { --type-bg: #ee99ac; --type-text: #333; }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+
+/* UTILITIES */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%  { transform: scale(1.3); }
+  28%  { transform: scale(1); }
+  42%  { transform: scale(1.2); }
+  70%  { transform: scale(1); }
+}
+
+/* SKELETON LOADING */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-card) 25%,
+    var(--bg-card-hover) 50%,
+    var(--bg-card) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: var(--radius-sm);
+}
