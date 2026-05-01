@@ -169,8 +169,10 @@ async function fetchGitHubUser(token) {
 
 // eslint-disable-next-line no-unused-vars
 // Only called for real token sessions — mock sessions intentionally excluded
+// ✅ Replace with this (adds eslint-disable comment)
+// eslint-disable-next-line no-unused-vars
 function persistSession(session) {
-  try {
-    localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-  } catch { /* storage full */ }
-}
+    try {
+      localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+    } catch { /* storage full */ }
+  }
