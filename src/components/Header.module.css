@@ -100,3 +100,60 @@
   min-width: 20px;
   text-align: center;
 }
+
+@media (max-width: 768px) {
+  .inner {
+    padding: 0 12px;
+    gap: 8px;
+  }
+
+  .logo {
+    gap: 6px;
+    min-width: 0;
+  }
+
+  .logoText {
+    font-size: 22px;
+    letter-spacing: 1px;
+  }
+
+  .logoSub {
+    letter-spacing: 2px;
+    font-size: 10px;
+  }
+
+  .nav {
+    gap: 2px;
+  }
+
+  .navBtn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 520px) {
+  .inner {
+    padding: 0 8px;
+    gap: 6px;
+  }
+
+  .logoText {
+    font-size: 18px;
+  }
+
+  .logoSub {
+    display: none;
+  }
+
+  .navBtn {
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  .badge {
+    font-size: 10px;
+    min-width: 18px;
+    padding: 1px 6px;
+  }
+}

@@ -174,7 +174,24 @@
     color: var(--text-primary);
   }
   
-  .logoutItem:hover {
-    color: var(--accent-red);
+.logoutItem:hover {
+  color: var(--accent-red);
+}
+
+@media (max-width: 768px) {
+  .trigger {
+    padding: 4px 8px 4px 4px;
+    gap: 6px;
   }
+
+  .name {
+    display: none;
+  }
+
+  .dropdown {
+    min-width: 200px;
+    max-width: calc(100vw - 16px);
+    right: 0;
+  }
+}
   
