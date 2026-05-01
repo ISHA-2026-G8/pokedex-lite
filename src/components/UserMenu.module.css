@@ -1,10 +1,6 @@
 .wrap {
-  position: relative;
-}
-
-.backdrop {
-  display: none;
-}
+    position: relative;
+  }
   
   /* ── Trigger button ── */
   .trigger {
@@ -73,21 +69,24 @@
   }
   
   /* ── Dropdown ── */
-.dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  min-width: 220px;
-  background: #141a33;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  overflow: hidden;
-  animation: popIn 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
-  z-index: 200;
-}
+  .dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 230px;
+    /* FIX: fully opaque solid background — no transparency so page content
+       behind the dropdown never bleeds through */
+    background: #1e1e3a;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.05);
+    overflow: hidden;
+    animation: popIn 0.15s cubic-bezier(0.4, 0, 0.2, 1) both;
+    /* High z-index so it always renders above the blurred header */
+    z-index: 9999;
+    /* Prevent any inherited backdrop-filter from parent bleeding in */
+    isolation: isolate;
+  }
   
   @keyframes popIn {
     from { opacity: 0; transform: translateY(-8px) scale(0.97); }
@@ -100,6 +99,7 @@
     align-items: center;
     gap: 12px;
     padding: 16px;
+    background: #1e1e3a;
   }
   
   .avatarLg {
@@ -135,6 +135,7 @@
   /* ── Mock badge ── */
   .mockBadgeRow {
     padding: 0 16px 12px;
+    background: #1e1e3a;
   }
   
   .mockBadge {
@@ -163,7 +164,7 @@
     align-items: center;
     gap: 10px;
     padding: 11px 16px;
-    background: none;
+    background: #1e1e3a;
     border: none;
     color: var(--text-secondary);
     font-family: var(--font-body);
@@ -176,44 +177,10 @@
   }
   
   .menuItem:hover {
-    background: var(--bg-card-hover);
+    background: #26264a;
     color: var(--text-primary);
   }
   
-.logoutItem:hover {
-  color: var(--accent-red);
-}
-
-@media (max-width: 768px) {
-  .backdrop {
-    display: block;
-    position: fixed;
-    top: 64px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border: 0;
-    background: rgba(8, 10, 22, 0.52);
-    backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(1px);
-    z-index: 180;
-    cursor: default;
+  .logoutItem:hover {
+    color: var(--accent-red);
   }
-
-  .trigger {
-    padding: 4px 8px 4px 4px;
-    gap: 6px;
-  }
-
-  .name {
-    display: none;
-  }
-
-  .dropdown {
-    min-width: 200px;
-    max-width: calc(100vw - 16px);
-    right: 0;
-    z-index: 200;
-  }
-}
-  
