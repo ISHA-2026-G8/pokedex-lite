@@ -30,9 +30,7 @@ export function AuthProvider({ children }) {
   const [loading, setLoading]         = useState(true);
   const [authLoading, setAuthLoading] = useState(false);
 
-  // ── BUG FIX 1: Only restore REAL token sessions from localStorage.
-  // Mock sessions are intentionally NOT persisted so the login screen
-  // always appears on a fresh page load / after logout.
+ 
   useEffect(() => {
     const restoreSession = async () => {
       try {
@@ -40,10 +38,8 @@ export function AuthProvider({ children }) {
         if (stored) {
           const session = JSON.parse(stored);
           if (session.mock) {
-            // Stale mock entry from old builds — clear it
             localStorage.removeItem(SESSION_KEY);
           } else if (session.token) {
-            // Real token — re-verify with GitHub
             const profile = await fetchGitHubUser(session.token);
             if (profile) {
               setUser({ ...profile, token: session.token });
@@ -62,7 +58,6 @@ export function AuthProvider({ children }) {
     restoreSession();
   }, []);
 
-  // ── Handle OAuth redirect callback (code in URL) ──────────────────────────
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const code   = params.get('code');
@@ -70,10 +65,8 @@ export function AuthProvider({ children }) {
 
     if (!code) return;
 
-    // Remove OAuth params from URL immediately
     window.history.replaceState({}, document.title, window.location.pathname);
 
-    // Verify state (CSRF protection)
     const savedState = sessionStorage.getItem('oauth_state');
     sessionStorage.removeItem('oauth_state');
 
@@ -84,24 +77,12 @@ export function AuthProvider({ children }) {
     }
 
     handleOAuthCode(code);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []); 
 
   const handleOAuthCode = async (code) => {
     setAuthLoading(true);
     try {
-      // ── Real flow: uncomment when you have a backend ─────────────────────
-      // const res = await fetch('/api/auth/github/callback', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ code }),
-      // });
-      // const { access_token, error } = await res.json();
-      // if (error || !access_token) throw new Error(error || 'Token exchange failed');
-      // const profile = await fetchGitHubUser(access_token);
-      // persistSession({ token: access_token });
-      // setUser({ ...profile, token: access_token });
 
-      // ── Demo fallback (no backend) ────────────────────────────────────────
       await new Promise(r => setTimeout(r, 700));
       // Mock user is set in state ONLY — not saved to localStorage
       setUser(MOCK_USER);
@@ -115,7 +96,6 @@ export function AuthProvider({ children }) {
   // ── Log in with GitHub ────────────────────────────────────────────────────
   const loginWithGitHub = useCallback(() => {
     if (!GITHUB_CLIENT_ID) {
-      // Dev mode: instant mock sign-in, state only — NOT persisted
       setAuthLoading(true);
       setTimeout(() => {
         setUser(MOCK_USER);
@@ -137,10 +117,7 @@ export function AuthProvider({ children }) {
     window.location.href = `${GITHUB_OAUTH_URL}?${params}`;
   }, []);
 
-  // ── BUG FIX 2: Logout ────────────────────────────────────────────────────
-  // Clears any real token from storage and resets user state to null.
-  // Because mock sessions are never stored, this is guaranteed to always
-  // return to the login screen.
+ 
   const logout = useCallback(() => {
     localStorage.removeItem(SESSION_KEY);
     setUser(null);

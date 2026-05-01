@@ -7,34 +7,6 @@ import FavoritesPage from './pages/FavoritesPage';
 import styles from './App.module.css';
 import LoginPage from './pages/LoginPage';
 
-// export default function App() {
-//   const { user, loading } = useAuth();
-//   const [activePage, setActivePage] = useState('home');
-
-//   return (
-//     <FavoritesProvider>
-//       <div className={styles.app}>
-//         {/* Decorative background blobs */}
-//         <div className={styles.blob1} aria-hidden="true" />
-//         <div className={styles.blob2} aria-hidden="true" />
-
-//         <Header activePage={activePage} setActivePage={setActivePage} />
-
-//         {activePage === 'home'      && <HomePage />}
-//         {activePage === 'favorites' && <FavoritesPage />}
-
-//         <footer className={styles.footer}>
-//           <p>
-//             Built with ♥ using{' '}
-//             <a href="https://pokeapi.co" target="_blank" rel="noreferrer">PokéAPI</a>.
-//             Pokémon © Nintendo / Game Freak.
-//           </p>
-//         </footer>
-//       </div>
-//     </FavoritesProvider>
-//   );
-// }
-
 
 
 
