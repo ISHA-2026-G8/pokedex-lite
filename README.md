@@ -17,7 +17,7 @@ A sleek, feature-rich Pokédex web app built with React.js and the public PokéA
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/YOUR_USERNAME/pokedex-lite.git
+git clone https://github.com/ISHA-2026-G8/pokedex-lite
 cd pokedex-lite
 
 # 2. Install dependencies
@@ -127,7 +127,4 @@ src/
 **Problem:** Favorites needed to survive page refreshes without a backend.  
 **Solution:** Used `localStorage` via React Context. The initial state is lazily loaded from `localStorage`, and every favorites change writes back via `useEffect`.
 
----
 
-## 📝 License
-MIT — free to use and modify.
